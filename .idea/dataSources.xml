@@ -9,5 +9,16 @@
       <jdbc-url>jdbc:mysql://127.0.0.1:3306/?user=hbstudent</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="src:hibernate.cfg.xml/Hibernate" uuid="eba0b46a-847e-42e7-ad60-7bfa10c9e6b3">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+/Users/ykb/IdeaProjects/hibernate-demo/src/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/?user=hbstudent?useSSL=false&amp;serverTimezone=UTC</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
