@@ -16,9 +16,9 @@ public class PrimaryKeyDemo {
 
         try{
             System.out.println("Creating 3 student objects...");
-            Student tempStudent1 = new Student("John", "Doe", "johndoe@gmail.com");
-            Student tempStudent2 = new Student("Miralem", "Pjanic", "m.pjanic@gmail.com");
-            Student tempStudent3 = new Student("Alex", "Texeira", "alex.texeira@gmail.com");
+            Student tempStudent1 = new Student("Rachid", "Ghezzal", "rachidghezzal@gmail.com");
+            Student tempStudent2 = new Student("Michy", "Batshuayi", "michy1903@gmail.com");
+            Student tempStudent3 = new Student("Marek", "Hamsik", "Hamsik61@gmail.com");
 
             session.beginTransaction();
 
