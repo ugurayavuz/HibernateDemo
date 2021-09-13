@@ -5,9 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class UpdateStudentDemo {
+public class DeleteStudentDemo {
     public static void main(String[] args) {
-
         SessionFactory factory = new Configuration()
                 .configure()
                 .addAnnotatedClass(Student.class)
@@ -15,39 +14,33 @@ public class UpdateStudentDemo {
 
         Session session = factory.getCurrentSession();
 
-        try{
+        try {
             int studentId = 1;
 
-            session=factory.getCurrentSession();
-            session.beginTransaction();
-
-            System.out.println("\nGetting student with id: " + studentId);
-
-            Student myStudent = session.get(Student.class, studentId);
-
-            System.out.println("Updating student...");
-            myStudent.setFirstName("Rasit");
-
-            System.out.println("Done!");
-            /////////
-            session.getTransaction().commit();
-
+            // now get a new session and start transaction
             session = factory.getCurrentSession();
             session.beginTransaction();
 
-            //update email for all students
-            System.out.println("\n\nUpdate email for all students");
+            // retrieve student based on the id: primary key
+            System.out.println("\nGetting student with id: " + studentId);
+            Student myStudent = session.get(Student.class, studentId);
 
-            session.createQuery("update Student set email='besiktas@gmail.com'")
-                    .executeUpdate();
+//            // delete the student
+//            System.out.println("\nDeleting student: " + myStudent);
+//            session.delete(myStudent);
 
+            // delete student id=2
+            System.out.println("Deleting student id=2");
+            session.createQuery("delete from Student where id=2").executeUpdate();
+
+            // commit the transaction
             session.getTransaction().commit();
+
             System.out.println("Done!");
 
         }
         finally {
             factory.close();
         }
-
     }
 }
