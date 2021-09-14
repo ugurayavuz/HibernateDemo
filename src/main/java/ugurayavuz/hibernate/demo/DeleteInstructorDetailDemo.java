@@ -1,13 +1,12 @@
 package ugurayavuz.hibernate.demo;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.ugurayavuz.hibernate.demo.entity.Instructor;
 import com.ugurayavuz.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class GetInstructorDetailDemo {
+public class DeleteInstructorDetailDemo {
 
     public static void main(String[] args) {
 
@@ -26,7 +25,7 @@ public class GetInstructorDetailDemo {
             session.beginTransaction();
 
             // get the instructor detail object
-            int theId=456;
+            int theId=3;
             InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class,
                     theId);
 
@@ -36,6 +35,10 @@ public class GetInstructorDetailDemo {
             // print the associated instructor
             System.out.println("\nthe associated instructor: " +
                     tempInstructorDetail.getInstructor());
+
+            // delete the instructor detail
+            System.out.println("Deleting tempInstructorDetail: " + tempInstructorDetail);
+            session.delete(tempInstructorDetail);
 
             // commit transaction
             session.getTransaction().commit();
