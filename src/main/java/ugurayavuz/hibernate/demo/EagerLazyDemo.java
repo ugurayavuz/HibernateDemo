@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CreateCoursesDemo {
+public class EagerLazyDemo {
 
     public static void main(String[] args) {
 
@@ -31,19 +31,14 @@ public class CreateCoursesDemo {
             int theId=1;
             Instructor tempInstructor = session.get(Instructor.class, theId);
 
-            // create some courses
-            Course tempCourse1 = new Course("Air Guitar- The Ultimate Guide");
-
-            // add courses to instructor
-            tempInstructor.add(tempCourse1);
-
-            // save the courses
-            session.save(tempCourse1);
+            System.out.println("Debug: Instructor: " + tempInstructor);
+            // get course for the instructor
+            System.out.println("Debug: Courses: " + tempInstructor.getCourses());
 
             // commit transaction
             session.getTransaction().commit();
 
-            System.out.println("Done!");
+            System.out.println("Debug: Done!");
         }
         finally {
             //add clean up code
