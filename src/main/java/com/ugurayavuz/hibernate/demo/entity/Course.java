@@ -1,37 +1,57 @@
 package com.ugurayavuz.hibernate.demo.entity;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "course")
+@Table(name="course")
 public class Course {
 
-    //define our fields
+    // define our fields
+
+    // define constructors
+
+    // define getter setters
+
+    // define tostring
+
+    // annotate fields
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
-    @Column(name = "title")
+    @Column(name="title")
     private String title;
 
-    //We don't want CascaseType.REMOVE here
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-    CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "instructor_id")
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="instructor_id")
     private Instructor instructor;
 
-    //define constructors
-    public Course(){
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="course_id")
+    private List<Review> reviews;
+
+    public Course() {
 
     }
-    //id is auto generated and Instructur will actually
-    //assign that or set that up later
+
     public Course(String title) {
         this.title = title;
     }
-
-    //define getter setters
 
     public int getId() {
         return id;
@@ -57,16 +77,29 @@ public class Course {
         this.instructor = instructor;
     }
 
-    //define toString
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    // add a convenience method
+
+    public void addReview(Review theReview) {
+
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+
+        reviews.add(theReview);
+    }
 
     @Override
     public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", instructor=" + instructor +
-                '}';
+        return "Course [id=" + id + ", title=" + title + "]";
     }
 
-    //annotate fields
+
 }
