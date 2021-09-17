@@ -1,14 +1,11 @@
 package ugurayavuz.hibernate.demo;
 
-import com.ugurayavuz.hibernate.demo.entity.Course;
-import com.ugurayavuz.hibernate.demo.entity.Instructor;
-import com.ugurayavuz.hibernate.demo.entity.InstructorDetail;
-import com.ugurayavuz.hibernate.demo.entity.Review;
+import com.ugurayavuz.hibernate.demo.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class GetCourseAndReviewsDemo {
+public class DeleteOnlyStudentDemo {
 
     public static void main(String[] args) {
 
@@ -19,6 +16,7 @@ public class GetCourseAndReviewsDemo {
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
                 .addAnnotatedClass(Review.class)
+                .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
         // create session
@@ -28,15 +26,16 @@ public class GetCourseAndReviewsDemo {
             // start a transaction
             session.beginTransaction();
 
-            // get course from the db
-            int theId = 10;
-            Course tempCourse=session.get(Course.class, theId);
+            // get the Student from the db
+            int studentId=2;
+            Student tempStudent = session.get(Student.class, studentId);
+            System.out.println("\nLoaded student: " +tempStudent);
+            System.out.println("Courses: " + tempStudent.getCourses());
 
-            // print the course
-            System.out.println("Course: " + tempCourse);
-
-            // print the course reviews
-            System.out.println(tempCourse.getReviews());
+            // delete the student
+            System.out.println("\nDeleting the student: " + tempStudent);
+            session.delete(tempStudent);
+            System.out.println("\nStudent deleted.");
 
             // commit transaction
             session.getTransaction().commit();

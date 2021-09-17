@@ -1,12 +1,11 @@
 package ugurayavuz.hibernate.demo;
 
-import com.ugurayavuz.hibernate.demo.entity.Instructor;
-import com.ugurayavuz.hibernate.demo.entity.InstructorDetail;
+import com.ugurayavuz.hibernate.demo.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class GetInstructorDetailDemo {
+public class GetCoursesForMaryDemo {
 
     public static void main(String[] args) {
 
@@ -15,6 +14,9 @@ public class GetInstructorDetailDemo {
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)
+                .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
         // create session
@@ -24,29 +26,24 @@ public class GetInstructorDetailDemo {
             // start a transaction
             session.beginTransaction();
 
-            // get the instructor detail object
-            int theId=456;
-            InstructorDetail tempInstructorDetail = session.get(InstructorDetail.class,
-                    theId);
-
-            // print the instructor detail
-            System.out.println("\ntempInstructorDetail: " + tempInstructorDetail);
-
-            // print the associated instructor
-            System.out.println("\nthe associated instructor: " +
-                    tempInstructorDetail.getInstructor());
+            // get "Mary" from the db
+            int theId=2;
+            Student tempStudent = session.get(Student.class, theId);
+            System.out.println("Loaded student: " + tempStudent);
+            // get courses
+            System.out.println("Getting courses...");
+            System.out.println("Courses: " + tempStudent.getCourses());
 
             // commit transaction
             session.getTransaction().commit();
 
             System.out.println("Done!");
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
         finally {
-            // handle connection leak issue
+
+            // add clean up code
             session.close();
+
             factory.close();
         }
     }

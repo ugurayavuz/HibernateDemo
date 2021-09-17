@@ -1,14 +1,11 @@
 package ugurayavuz.hibernate.demo;
 
-import com.ugurayavuz.hibernate.demo.entity.Course;
-import com.ugurayavuz.hibernate.demo.entity.Instructor;
-import com.ugurayavuz.hibernate.demo.entity.InstructorDetail;
-import com.ugurayavuz.hibernate.demo.entity.Review;
+import com.ugurayavuz.hibernate.demo.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteCourseAndReviewsDemo {
+public class CreateCourseAndStudentsDemo {
 
     public static void main(String[] args) {
 
@@ -19,27 +16,32 @@ public class DeleteCourseAndReviewsDemo {
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
                 .addAnnotatedClass(Review.class)
+                .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
         // create session
         Session session = factory.getCurrentSession();
 
         try {
+
             // start a transaction
             session.beginTransaction();
 
-            // get course from the db
-            int theId = 10;
-            Course tempCourse=session.get(Course.class, theId);
+            // create a course
+            Course tempCourse = new Course("Pacman - How to score one million points?");
 
-            // print the course
-            System.out.println("Course: " + tempCourse);
+            // create the students
+            Student tempStudent1= new Student("John", "Doe", "johndoe@gmail.com");
+            Student tempStudent2= new Student("Mary", "Public", "marypublic@gmail.com");
 
-            // print the course reviews
-            System.out.println(tempCourse.getReviews());
+            // add students to the course
+            tempCourse.addStudent(tempStudent1);
+            tempCourse.addStudent(tempStudent2);
 
-            // delete the course. It will delete also reviews because of CascadeType.ALL
-            session.delete(tempCourse);
+            // save the students
+            System.out.println("Saving course and students...");
+            session.persist(tempCourse);
+            System.out.println("Saved course: " +tempCourse + "Saved students: " + tempCourse.getStudents());
 
             // commit transaction
             session.getTransaction().commit();
